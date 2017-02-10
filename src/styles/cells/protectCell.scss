@@ -1,0 +1,59 @@
+.cell-menu{
+  position: relative;
+  .cell_switch{
+    font-size: 15px;
+    color:#666;
+    .cell_ft{
+      position: relative;
+      width:70px;
+      &:before{
+        content: "";
+        display: inline-block;
+        transform: rotate(135deg);
+        height: 6px;
+        width: 6px;
+        border-width: 2px 2px 0 0;
+        border-color: #C8C8CD;
+        border-style: solid;
+        position: relative;
+        position: absolute;
+        top: 8px;
+        right: 3px;
+      }
+      select{
+        -webkit-appearance: none;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        width:60px;
+        font-size: inherit;
+        line-height: inherit;
+        position: relative;
+        z-index: 1;
+        color:#555;
+        text-align: right;
+      }
+    }
+  }
+}
+
+.cell-menu.mask {
+  &:before {
+    content: " ";
+    width: 100%;
+    height: 104px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: rgba(255,255,255,.6);
+  }
+}
+
+.tip {
+    font-size: 15px;
+    vertical-align: top;
+    color: rgb(177,177,177);
+    height: 65px;
+    padding: 10px 15px;
+  }

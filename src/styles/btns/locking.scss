@@ -1,0 +1,60 @@
+.tipmask{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+    display: box; 
+    display: -webkit-box; 
+    display: -moz-box; 
+    -webkit-box-pack:center; 
+    -moz-box-pack:center; 
+    -webkit-box-align:center; 
+    -moz-box-align:center; 
+    z-index:9999;
+  }
+  .tip_inner{
+    width:230px;
+    text-align:center;
+    padding:10px;
+    background-color:#000;
+    opacity:.7;
+    color:#fff;
+    font-size:16px;
+    line-height:1.5;
+    border-radius:6px;
+  }
+  .locking{
+    background:#fff;
+    .locking-btn{
+      width:100%;
+      line-height: 55px;
+      font-size: 18px;
+      color: rgb(239,108,121);
+      text-align: center;
+    }
+    .locking-time{
+      padding:10% 0;
+      width:100%;
+      background:url(../../images/img_assistant_count_down@3x.png) no-repeat center center;
+      background-size:60% 100%;
+      text-align: center;
+      p{
+        line-height: 25px;
+        color:#666;
+      }
+      .time{
+        font-size: 30px;
+        line-height: 30px;
+      }
+      #infinite{
+        font-size: 24px;
+        line-height: 30px;
+      }
+      .locker_img{
+        display: block;
+        width: 60px;
+        margin: 0 auto;
+      }
+    }
+  }
