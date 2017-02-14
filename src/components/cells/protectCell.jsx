@@ -1,8 +1,11 @@
 require('styles/cells/protectCell.scss');
 
 import React from 'react';
+//import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import * as AppActions from '../../actions'
 
-class protectCell extends React.Component {
+class ProtectCell extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +20,12 @@ class protectCell extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.updteSelect = this.updteSelect.bind(this);
     this.selectlist = this.selectlist.bind(this);
+
+    var _this = this;
+    this.props.getReactjs().then(function(){
+      console.log(_this.props.postsBySubreddit)
+    })
+
   }
 
   toggle() {
@@ -80,8 +89,21 @@ class protectCell extends React.Component {
   }
 }
 
-protectCell.defaultProps = {
+ProtectCell.defaultProps = {
 };
 
-export default protectCell;
+//将store里的state.postsBySubreddit 绑定到组件的props上面
+function mapStateToProps(state) {
+  return {
+    postsBySubreddit: state.postsBySubreddit
+  }
+}
+//将dispatch（actions）绑定到组件的props上
+function mapDispatchToProps(dispatch) {
+  return {
+    getReactjs: () => dispatch(AppActions.fetchPosts('reactjs'))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProtectCell);
 
