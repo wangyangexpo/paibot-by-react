@@ -2,6 +2,7 @@ require('styles/App.scss');
 
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Loading from './loading/loading.jsx';
 
 class AppComponent extends React.Component {
   render() {
@@ -10,11 +11,14 @@ class AppComponent extends React.Component {
             transitionName="transitionWrapper"
             transitionEnterTimeout={600}
             transitionLeaveTimeout={600}>
-            <div key={this.props.location.pathname} className='wrap'
-                style={{position:'absolute', width: '100%'}}>
-                {
-                    this.props.children
-                }
+            <div>
+                <div key={this.props.location.pathname} className='wrap'
+                    style={{position:'absolute', width: '100%'}}>
+                    {
+                        this.props.children
+                    }
+                </div>
+                <Loading />
             </div>
         </ReactCSSTransitionGroup>
     );

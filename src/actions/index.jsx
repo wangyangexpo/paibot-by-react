@@ -1,18 +1,5 @@
-// import {ActionType} from './Constants'
-
-// export function addTodo(text) {
-//   return { type: ActionType.ADD_TODO, text }
-// }
-
-// export function toggleTodo(index) {
-//   return { type: ActionType.TOGGLE_TODO, index }
-// }
-
-// export function setVisibilityFilter(filter) {
-//   return { type: ActionType.SET_VISIBILITY_FILTER, filter }
-// }
-
 import fetch from 'isomorphic-fetch'
+import config  from '../config';
 
 export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
 
@@ -72,11 +59,10 @@ function shouldFetchPosts(state, subreddit) {
 
 export function fetchPostsIfNeeded(subreddit) {
 
-  // 注意这个函数也接收了 getState() 方法
-  // 它让你选择接下来 dispatch 什么。
-
-  // 当缓存的值是可用时，
-  // 减少网络请求很有用。
+  /* 注意这个函数也接收了 getState() 方法
+   * 它让你选择接下来 dispatch 什么。
+   * 当缓存的值是可用时，
+   * 减少网络请求很有用。*/
 
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), subreddit)) {
@@ -88,3 +74,62 @@ export function fetchPostsIfNeeded(subreddit) {
     }
   }
 }
+
+//===================== 业务 action ===================
+
+const getUserInfo = () => ({
+  uid: config['uid'],
+  token: config['token'],
+  cid:config['cid'],
+  uid_children: config['uid_children'],
+  appid:config['appid']
+});
+
+// 设置userInfo的异步action
+export const INVALID_USER_INFO = 'INVALID_USER_INFO'
+
+export function invalidUserInfo(userInfo) {
+  return {
+    type: INVALID_USER_INFO,
+    userInfo
+  }
+}
+
+export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
+export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'
+
+export function setUserInfo(data) {
+
+  let datas = Object.assign(data, getUserInfo());
+  let post_data = JSON.stringify(datas);
+
+  return dispatch => {
+    dispatch({
+      type: REQUEST_USER_INFO
+    })
+    return fetch(config.baseUrl+'/assistant/Protection/setInfoUse?data=' + post_data + '&device_id=' + config.device_id)
+      .then(res => res.json())
+      .then(data => dispatch({
+          type: RECEIVE_USER_INFO,
+          response: data, // data = {http_status_code: 200, data: [...]}
+          receivedAt: Date.now()
+        })
+      )
+  }
+
+}
+
+// loading 加载中
+
+export const SHOW_LOADING = 'SHOW_LOADING'
+export const HIDE_LOADING = 'HIDE_LOADING'
+
+export function loading(bool, text) {
+
+  return {
+    type: bool ? SHOW_LOADING : HIDE_LOADING,
+    loading: bool,
+    loadingText: text
+  }
+}
+

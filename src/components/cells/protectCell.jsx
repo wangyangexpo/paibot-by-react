@@ -12,47 +12,99 @@ class ProtectCell extends React.Component {
       btnstatus:false,
       items:[5,10,15,20,25,30,40,50,60,100,120],
       dataInfo:[],
-      lastTime_selected:30,
-      restTime_selected:5,
-      isDefaultSet:true //是否是初始化的数据,关系到type的值
+      lastTime_selected: 30,
+      restTime_selected: 5
     }
 
     this.toggle = this.toggle.bind(this);
-    this.updteSelect = this.updteSelect.bind(this);
     this.selectlist = this.selectlist.bind(this);
 
-    var _this = this;
-    this.props.getReactjs().then(function(){
-      console.log(_this.props.postsBySubreddit)
-    })
+  }
 
+  componentDidMount() {
+    // 初始化 btnstatuse，lastTime_selected, restTime_selected
+    let initInfo = this.props.info;
+    if(initInfo.status != undefined && initInfo.status != 0){
+      this.setState({
+        btnstatus: true,
+        lastTime_selected: initInfo.last_time,
+        restTime_selected: initInfo.rest_time
+      })
+    }
+  
   }
 
   toggle() {
-    this.setState((prevState) => ({
-      btnstatus: !prevState.btnstatus
-    }))
-  }
+    let _this = this;
 
-  //更新使用时长和休息时长
-  updteSelect(){
+    // toggles 表示是从 原来的false => true(toggle = 1) 还是 true => false(toggle = 0)
+    let toggles = !this.state.btnstatus;
     
+    let data = {
+      type: toggles ? ['status','last_time','rest_time'] : ['status'],
+      status: toggles ? 1 : 0,
+      last_time: this.state.lastTime_selected,
+      rest_time: this.state.restTime_selected
+
+    };
+    _this.props.showLoading(true, '设置中');
+
+    this.props.setUserInfo(data)
+    .then(() => {
+      _this.props.showLoading(false);
+      if(_this.props.userInfo.http_status_code == '200') {
+        _this.setState(() => {
+          btnstatus: toggles
+        })
+      } else {
+        alert('修改失败！')
+      }
+    })
+    .catch(() => {
+      alert('设置失败！');
+      _this.props.showLoading(false);
+    });
   }
 
   //修改使用时长和休息时长
   selectlist(whichTime,event){
-    this.setState({
-      [whichTime + '_selected']: event.target.value
-    })
     
+    var _this = this;
+    var seletc_value = event.target.value;
+    
+    let name = (whichTime == 'lastTime' ? 'last_time' : 'rest_time');
+
+    var data = {
+      type:[name],
+      status: '',
+      last_time: whichTime == 'lastTime' ? seletc_value : '',
+      rest_time: whichTime == 'restTime' ? seletc_value : ''
+    };
+
+    _this.props.showLoading(true, '设置中');
+    // 调用 store 传来的 action 更新 userInfo的last_time和rest_time
+    _this.props.setUserInfo(data)
+    .then(() => {
+      _this.props.showLoading(false);
+      if(_this.props.userInfo.http_status_code == '200') {
+        _this.setState({
+          [whichTime + '_selected']: seletc_value
+        })
+      } else {
+        alert('修改失败！')
+      }
+    })
+    .catch(() => {
+      alert('设置失败！');
+      _this.props.showLoading(false);
+    });
   }
 
   render() {
     var options = this.state.items.map((item) => {
-                    return (<option key={item} value={item}>{item}分钟</option>)
-                  });
-    var className = 'cell-menu';
-    className += this.state.btnstatus ? '' : ' mask';
+      return (<option key={item} value={item}>{item}分钟</option>)
+    });
+    var className = 'cell-menu' + (this.state.btnstatus ? '' : ' mask');
     return (
       <div>
         <div className="cells-form top1">
@@ -95,13 +147,13 @@ ProtectCell.defaultProps = {
 //将store里的state.postsBySubreddit 绑定到组件的props上面
 function mapStateToProps(state) {
   return {
-    postsBySubreddit: state.postsBySubreddit
+    userInfo: state.setUserInfo.userInfo
   }
 }
 //将dispatch（actions）绑定到组件的props上
 function mapDispatchToProps(dispatch) {
   return {
-    getReactjs: () => dispatch(AppActions.fetchPosts('reactjs'))
+    setUserInfo: (info) => dispatch(AppActions.setUserInfo(info))
   };
 }
 

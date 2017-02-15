@@ -1,50 +1,10 @@
-// import { combineReducers } from 'redux'
-// import { ActionType, VisibilityFilters } from '../actions/Constants'
-
-// function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action) {
-//   switch (action.type) {
-//     case ActionType.SET_VISIBILITY_FILTER:
-//       return action.filter
-//     default:
-//       return state
-//   }
-// }
-
-// function todos(state = [], action) {
-//   switch (action.type) {
-//     case ActionType.ADD_TODO:
-//       return [
-//         ...state,
-//         {
-//           text: action.text,
-//           completed: false
-//         }
-//       ]
-//     case ActionType.TOGGLE_TODO:
-//       return state.map((todo, index) => {
-//         if (index === action.index) {
-//           return Object.assign({}, todo, {
-//             completed: !todo.completed
-//           })
-//         }
-//         return todo
-//       })
-//     default:
-//       return state
-//   }
-// }
-
-// const todoApp = combineReducers({
-//   visibilityFilter,
-//   todos
-// })
-
-// export default todoApp
-
 import { combineReducers } from 'redux'
+
 import {
   SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS
+  REQUEST_POSTS, RECEIVE_POSTS,
+  INVALID_USER_INFO, REQUEST_USER_INFO, RECEIVE_USER_INFO,
+  SHOW_LOADING, HIDE_LOADING
 } from '../actions'
 
 function selectedsubreddit(state = 'reactjs', action) {
@@ -96,9 +56,58 @@ function postsBySubreddit(state = {}, action) {
   }
 }
 
+function setUserInfo(state = {
+  isFetching: false,
+  didInvalid: false,
+  userInfo: {}
+}, action) {
+  switch (action.type) {
+    case INVALID_USER_INFO:
+      return Object.assign({}, state, {
+        didInvalid: true
+      })
+    case REQUEST_USER_INFO:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalid: false
+      })
+    case RECEIVE_USER_INFO:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalid: false,
+        userInfo: action.response, // action.response = {http_status_code: 200, data: [...]}
+        lastUpdated: action.receivedAt
+      })
+    default:
+      return state
+  }
+}
+
+function loading(state = {
+  isLoading: false,
+  loadingText: '加载中'
+}, action) {
+  switch (action.type) {
+    case SHOW_LOADING:
+      return Object.assign({}, state, {
+        isLoading: true,
+        loadingText: action.loadingText ? action.loadingText : '加载中'
+      })
+    case HIDE_LOADING:
+      return Object.assign({}, state, {
+        isLoading: false,
+        loadingText: '加载中'
+      })
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   postsBySubreddit,
-  selectedsubreddit
+  selectedsubreddit,
+  setUserInfo,
+  loading
 })
 
 export default rootReducer

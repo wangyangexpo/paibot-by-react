@@ -202,7 +202,7 @@ class Locking extends React.Component {
         <div className="locking-btn bottom1" onClick={this.handleLocking}>
           {!this.state.toggleStatus ? '立即锁定平板' : '立即解锁平板'}
         </div>
-        <Actionsheet  listClick={this.itemClick} show={this.state.showLockList}></Actionsheet>
+        <Actionsheet listClick={this.itemClick} show={this.state.showLockList}></Actionsheet>
     </div>
     );
   }
