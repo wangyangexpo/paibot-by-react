@@ -3,6 +3,9 @@ require('styles/btns/locking.scss');
 import React from 'react';
 import Actionsheet from '../dialog/listHandle.jsx';
 
+import { connect } from 'react-redux';
+import { setSubreddit } from '../../actions'
+
 // 提示语组件 =====================start
 class TipMask extends React.PureComponent {
   render() {
@@ -99,44 +102,51 @@ class Locking extends React.Component {
       });
 
       if(lockingTime != 0){
-        if(lockingTime == Infinity){
-          localStorage.setItem('handle_lock',0);
-        }else{
-          localStorage.setItem('handle_lock',1);
-        }
-        let option = {status:1,time:lockingTime};
-        localStorage.setItem('lock_pre_status',JSON.stringify(option));
-
-        // 设置loading动画 todo
         
-        setTimeout(() => {
-          var push_status = '11';
+        let option = {
+          status:1,
+          time: lockingTime == Infinity ? '' : lockingTime,
+          type: lockingTime == Infinity ? ['status'] : ['status', 'lock_time']
+        };
 
-          if(push_status == '11'){
-            
-            if(lockingTime != Infinity){
-              _this.setState({
-                showLockList: false,
-                timeSecond: lockingTime*60,
-                showLocker: false,
-                toggleStatus: true,
-                timestatus: true
-              });
-              _this.countdown();
-            }else if(lockingTime == Infinity){
-              _this.setState({
-                showLocker: true,
-                toggleStatus: true
-              });
+        _this.props.showLoading(true, '设置中');
+        
+        _this.props.setLockingInfo(option)
+          .then(() => {
+          _this.props.showLoading(false);
+          // response_code 是返回response的http_status
+          // push_status 是返回数据的推送状态属性
+          let response_code = _this.props.lockingInfo.response_status;
+          if(response_code == '200'){
+            let push_status = _this.props.lockingInfo.response_data.succeed;
+            if(push_status == '11'){
+              if(lockingTime != Infinity){
+                _this.setState({
+                  showLockList: false,
+                  timeSecond: lockingTime*60,
+                  showLocker: false,
+                  toggleStatus: true,
+                  timestatus: true
+                });
+                _this.countdown();
+              }else {
+                _this.setState({
+                  showLocker: true,
+                  toggleStatus: true
+                });
+              }
+            }else if(push_status == '02'){
+              alert('设置失败，请重试');
+            }else{
+              alert('设置失败，请确认孩子的PaiBot处于联网状态');
             }
-          }else if(push_status == '02'){
-            alert('设置失败，请重试');
-          }else{
-            alert('设置失败，请确认孩子的PaiBot处于联网状态');
           }
-          
-        }, 100);
-      }
+        })
+        .catch(() => {
+            alert('设置失败！');
+            _this.props.showLoading(false);
+          });
+        }
   }
 
   // 立即解锁按钮（立即锁定按钮） 点击事件处理函数
@@ -151,43 +161,58 @@ class Locking extends React.Component {
       }else{
         // todo 设置loading的显示
 
-        setTimeout(() => {
-          
-          let push_status = '11';
-          if(push_status == '11'){
-            _this.setState({
-              toggleStatus: false,
-              timestatus: false
-            })
-          }else{
-            let lock_pre_status = localStorage.getItem('lock_pre_status');
-            if(lock_pre_status){
-              lock_pre_status = JSON.parse(lock_pre_status);
-            }else{
-              lock_pre_status = {};
-            }
+        _this.props.setLockingInfo({status: 0})
+          .then(() => {
+            let response_code = _this.props.lockingInfo.response_status;
+            if(response_code == '200'){
+              let push_status = _this.props.lockingInfo.response_data.succeed;
+              if(push_status == '11'){
+                _this.setState({
+                  toggleStatus: false,
+                  timestatus: false
+                })
+              }else{
 
-            if(push_status == '02'){
-              alert('设置失败，请重试');
-            }else{
-              alert('设置失败，请确认孩子的PaiBot处于联网状态');
-            }
+                if(push_status == '02'){
+                  alert('设置失败，请重试');
+                }else{
+                  alert('设置失败，请确认孩子的PaiBot处于联网状态');
+                }
 
-            _this.setState(prevState => ({
-              failedTimes: ++prevState.failedTimes
-            }))
+                _this.setState(prevState => ({
+                  failedTimes: ++prevState.failedTimes
+                }))
 
-            if(_this.state.failedTimes >= 2){
-              alert('异常情况下，长按电源键+音量加键5秒解锁平板');
+                if(_this.state.failedTimes >= 2){
+                  alert('异常情况下，长按电源键+音量加键5秒解锁平板');
+                }
+              }
             }
-          }
-          
-        }, 100);
+          })
       }
   }
 
   componentDidMount() {
-    this.countdown();
+    let lockingInfo = this.props.info;
+    let lockingStatus = lockingInfo.status;
+      if(lockingStatus == 1){
+
+        this.setState({
+          toggleStatus: true
+        });
+
+        if(lockingInfo.lock_time != 0){
+          this.setState({
+            timestatus: true,
+            timeSecond: lockingInfo.run_time
+          });
+          this.countdown();
+        }else if(lockingInfo.lock_time == 0){
+          this.setState({
+            showLocker: true
+          });
+        }
+      }
   }
 
   render() {
@@ -211,4 +236,23 @@ class Locking extends React.Component {
 Locking.defaultProps = {
 };
 
-export default Locking;
+//将store里的state.postsBySubreddit 绑定到组件的props上面
+function mapStateToProps(state) {
+  return {
+    lockingInfo: state.setSubreddit.lockingInfo
+  }
+}
+//将dispatch（actions）绑定到组件的props上
+function mapDispatchToProps(dispatch) {
+  return {
+    setLockingInfo: (params) => {
+      let subreddit = {
+        name: 'lockingInfo',
+        params: params
+      }
+      return dispatch(setSubreddit(subreddit))
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Locking);

@@ -3,7 +3,7 @@ require('styles/cells/protectCell.scss');
 import React from 'react';
 //import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
-import * as AppActions from '../../actions'
+import { setSubreddit } from '../../actions'
 
 class ProtectCell extends React.Component {
   constructor(props) {
@@ -49,10 +49,11 @@ class ProtectCell extends React.Component {
     };
     _this.props.showLoading(true, '设置中');
 
-    this.props.setUserInfo(data)
+    this.props.setProtectInfo(data)
     .then(() => {
       _this.props.showLoading(false);
-      if(_this.props.userInfo.http_status_code == '200') {
+      let response_status = _this.props.protectInfo.response_status;
+      if(response_status == '200') {
         _this.setState(() => {
           btnstatus: toggles
         })
@@ -61,8 +62,8 @@ class ProtectCell extends React.Component {
       }
     })
     .catch(() => {
-      alert('设置失败！');
       _this.props.showLoading(false);
+      alert('设置失败！');
     });
   }
 
@@ -83,10 +84,11 @@ class ProtectCell extends React.Component {
 
     _this.props.showLoading(true, '设置中');
     // 调用 store 传来的 action 更新 userInfo的last_time和rest_time
-    _this.props.setUserInfo(data)
+    _this.props.setProtectInfo(data)
     .then(() => {
       _this.props.showLoading(false);
-      if(_this.props.userInfo.http_status_code == '200') {
+      let response_status = _this.props.protectInfo.response_status;
+      if(response_status == '200') {
         _this.setState({
           [whichTime + '_selected']: seletc_value
         })
@@ -147,13 +149,19 @@ ProtectCell.defaultProps = {
 //将store里的state.postsBySubreddit 绑定到组件的props上面
 function mapStateToProps(state) {
   return {
-    userInfo: state.setUserInfo.userInfo
+    protectInfo: state.setSubreddit.protectInfo
   }
 }
 //将dispatch（actions）绑定到组件的props上
 function mapDispatchToProps(dispatch) {
   return {
-    setUserInfo: (info) => dispatch(AppActions.setUserInfo(info))
+    setProtectInfo: (params) => {
+      let subreddit = {
+        name: 'protectInfo',
+        params: params
+      }
+      return dispatch(setSubreddit(subreddit))
+    }
   };
 }
 

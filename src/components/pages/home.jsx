@@ -5,6 +5,8 @@ import Protectcell from '../cells/protectCell'
 import { connect } from 'react-redux';
 import { loading } from '../../actions'
 
+import { setSubreddit } from '../../actions'
+
 class Home extends React.Component {
   constructor(props) {
   	super(props);
@@ -19,15 +21,29 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.showLoading(true);
+    let _this = this;
+    this.props.getHomeInfo()
+      .then(() => {
+        let homeInfo = _this.props.homeInfo;
+        let response_status = homeInfo.response_status;
+        if(response_status == '200') {
+          _this.setState({
+            protect1: homeInfo.data[0],
+            protect2: homeInfo.data[1]
+          })
+        }
+      })
+      .catch(() => {
+      });
+
   }
 
   render() {
     return (
       <div>
   	    <div className="containder mt20">
-          <Protectcell info="protect1" showLoading={this.props.showLoading}></Protectcell>
-  	      <Locking time="protect2" showLoading={this.props.showLoading}></Locking>
+          <Protectcell info={this.state.protect1} showLoading={this.props.showLoading}></Protectcell>
+  	      <Locking info={this.state.protect2} showLoading={this.props.showLoading}></Locking>
   	    </div>
 	    </div>
     );
@@ -37,10 +53,22 @@ class Home extends React.Component {
 Home.defaultProps = {
 };
 
+function mapStateToProps(state) {
+  return {
+    homeInfo: state.setSubreddit.homeInfo
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
-    showLoading: (bool, text) => dispatch(loading(bool, text))
+    showLoading: (bool, text) => dispatch(loading(bool, text)),
+    getHomeInfo: () => {
+      let subreddit = {
+        name: 'homeInfo'
+      }
+      return dispatch(setSubreddit(subreddit))
+    }
   };
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,82 +1,51 @@
 import { combineReducers } from 'redux'
 
 import {
-  SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS,
-  INVALID_USER_INFO, REQUEST_USER_INFO, RECEIVE_USER_INFO,
+  INVALID_SUBREDDIT,
+  REQUEST_SUBREDDIT, RECEIVE_SUBREDDIT,
   SHOW_LOADING, HIDE_LOADING
 } from '../actions'
 
-function selectedsubreddit(state = 'reactjs', action) {
-  switch (action.type) {
-    case SELECT_SUBREDDIT:
-      return action.subreddit
-    default:
-      return state
-  }
-}
-
-function posts(state = {
+function processSets(state = {
   isFetching: false,
-  didInvalidate: false,
-  items: []
+  invalid: false,
+  http_status_code: '',
+  response_message: '',
+  data: {}
 }, action) {
   switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
+    case INVALID_SUBREDDIT:
       return Object.assign({}, state, {
-        didInvalidate: true
+        invalid: true
       })
-    case REQUEST_POSTS:
+    case REQUEST_SUBREDDIT:
       return Object.assign({}, state, {
         isFetching: true,
-        didInvalidate: false
+        invalid: false,
+        http_status_code: '',
+        response_message: ''
       })
-    case RECEIVE_POSTS:
+    case RECEIVE_SUBREDDIT:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
-        items: action.posts,
-        lastUpdated: action.receivedAt
+        invalid: false,
+        response_status: action.response.http_status_code,
+        response_message: action.response.msg,
+        response_data: action.response.data,
+        lastUpdated: action.receivedTime
       })
     default:
       return state
   }
 }
 
-function postsBySubreddit(state = {}, action) {
+function setSubreddit(state = {}, action) {
   switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
+    case INVALID_SUBREDDIT:
+    case RECEIVE_SUBREDDIT:
+    case REQUEST_SUBREDDIT:
       return Object.assign({}, state, {
-        [action.subreddit]: posts(state[action.subreddit], action)
-      })
-    default:
-      return state
-  }
-}
-
-function setUserInfo(state = {
-  isFetching: false,
-  didInvalid: false,
-  userInfo: {}
-}, action) {
-  switch (action.type) {
-    case INVALID_USER_INFO:
-      return Object.assign({}, state, {
-        didInvalid: true
-      })
-    case REQUEST_USER_INFO:
-      return Object.assign({}, state, {
-        isFetching: true,
-        didInvalid: false
-      })
-    case RECEIVE_USER_INFO:
-      return Object.assign({}, state, {
-        isFetching: false,
-        didInvalid: false,
-        userInfo: action.response, // action.response = {http_status_code: 200, data: [...]}
-        lastUpdated: action.receivedAt
+        [action.subreddit.name]: processSets(state[action.subreddit.name], action)
       })
     default:
       return state
@@ -104,9 +73,7 @@ function loading(state = {
 }
 
 const rootReducer = combineReducers({
-  postsBySubreddit,
-  selectedsubreddit,
-  setUserInfo,
+  setSubreddit,
   loading
 })
 

@@ -5,6 +5,9 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Loading from './loading/loading.jsx';
 
 class AppComponent extends React.Component {
+  componentDidMount() {
+  }
+
   render() {
     return (
     	<ReactCSSTransitionGroup
