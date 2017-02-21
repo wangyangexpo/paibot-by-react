@@ -1,0 +1,37 @@
+.cell-menu{
+  .export_white{
+    a{
+      display:block;
+      padding:10px 15px;
+      cursor: pointer;
+      position:relative;
+      font-size:16px;
+      span{
+        display:inline-block;
+        position:absolute;
+        top:11px;
+        right:30px;
+        color:#313131;
+        font-size:15px;
+      }
+      &:before{
+        content: "";
+        display: inline-block;
+        transform: rotate(-45deg);
+        height: 6px;
+        width: 6px;
+        border-width: 0px 2px 2px 0px;
+        border-color: #C8C8CD;
+        border-style: solid;
+        position: relative;
+        position: absolute;
+        top: 18px;
+        right: 18px;
+      }
+    }
+    .app_list{
+      padding: 10px 15px;
+      font-size:16px;
+    }
+  }
+}

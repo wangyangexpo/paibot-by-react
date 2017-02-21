@@ -1,4 +1,4 @@
-require('styles/cells/protectCell.scss');
+require('styles/cells/protectcell.scss');
 
 import React from 'react';
 //import { bindActionCreators } from 'redux'

@@ -10,20 +10,21 @@ class AppComponent extends React.Component {
 
   render() {
     return (
-    	<ReactCSSTransitionGroup
-            transitionName="transitionWrapper"
-            transitionEnterTimeout={600}
-            transitionLeaveTimeout={600}>
+
             <div>
-                <div key={this.props.location.pathname} className='wrap'
-                    style={{position:'absolute', width: '100%'}}>
-                    {
-                        this.props.children
-                    }
-                </div>
+                <ReactCSSTransitionGroup
+                transitionName="transitionWrapper"
+                transitionEnterTimeout={600}
+                transitionLeaveTimeout={600}
+                component="div">
+                    <div key={this.props.location.pathname} className='animate-route'>
+                        {
+                            this.props.children
+                        }
+                    </div>
+                </ReactCSSTransitionGroup>
                 <Loading />
             </div>
-        </ReactCSSTransitionGroup>
     );
   }
 }

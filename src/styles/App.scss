@@ -379,3 +379,11 @@ body {
   opacity: 0;
   transition: opacity 500ms ease-in-out;
 }
+
+.transitionWrapper{
+    position: relative;
+}
+
+.animate-route+.animate-route {
+  display: none;
+}

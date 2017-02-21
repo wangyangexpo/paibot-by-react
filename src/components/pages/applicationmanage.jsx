@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
+import Appcanvas from '../canvas/canvas'
+import Applicationrecom from '../cells/applicationrecom'
 
 class Applicationmanage extends React.Component {
   constructor(props) {
@@ -11,10 +12,11 @@ class Applicationmanage extends React.Component {
   render() {
     return (
       <div>
-  	    <div className="containder mt20">
-        <Link to="/home">Home</Link>
-  	    </div>
-	    </div>
+        <div className="containder">
+          <Appcanvas></Appcanvas>
+          <Applicationrecom></Applicationrecom>
+        </div>
+      </div>
     );
   }
 }

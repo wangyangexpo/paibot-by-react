@@ -1,6 +1,6 @@
 import React from 'react';
 import Locking from '../btns/locking'
-import Protectcell from '../cells/protectCell'
+import Protectcell from '../cells/protectcell'
 
 import { connect } from 'react-redux';
 import { loading } from '../../actions'

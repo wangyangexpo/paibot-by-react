@@ -11,7 +11,7 @@ function processSets(state = {
   invalid: false,
   http_status_code: '',
   response_message: '',
-  data: {}
+  response_data: {}
 }, action) {
   switch (action.type) {
     case INVALID_SUBREDDIT:
@@ -29,7 +29,7 @@ function processSets(state = {
       return Object.assign({}, state, {
         isFetching: false,
         invalid: false,
-        response_status: action.response.http_status_code,
+        response_status: action.response.http_status_code || action.response.http_code,
         response_message: action.response.msg,
         response_data: action.response.data,
         lastUpdated: action.receivedTime
