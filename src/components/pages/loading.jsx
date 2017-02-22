@@ -1,5 +1,3 @@
-require('styles/cells/managecell.scss');
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { loading } from '../../actions';
@@ -14,6 +12,7 @@ class Loading extends React.Component {
 
   componentDidMount() {
     let _this = this;
+    _this.props.showLoading(true);
     _this.props.getChildInfo()
       .then(() => {
         let response_status = _this.props.childInfo.response_status;
@@ -42,9 +41,7 @@ class Loading extends React.Component {
 
   render() {
     return (
-      <div>
-        
-      </div>
+      <div></div>
     );
   }
 }

@@ -58,6 +58,12 @@ let subreddits = {
 		setURL: baseUrl + '/user/device/getDeviceInfo',
 		getURL: baseUrl + '/user/device/getDeviceInfo',
 		params: {}
+	},
+	'manageModelApps': {
+		name: 'manageModelApps',
+		setURL: baseUrl + '/assistant/AppManage/showManageModelApp',
+		getURL: baseUrl + '/assistant/AppManage/showManageModelApp',
+		params: {}
 	}
 }
 

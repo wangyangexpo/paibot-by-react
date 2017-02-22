@@ -1,0 +1,148 @@
+.weekly_lists {
+  h5{
+    font-size: 16px;
+    line-height: 45px;
+    padding:0 10px;
+  }
+  .weekly_num{
+    background:#fff;
+    .weekly_select{
+      display:flex;
+      padding:10px;
+      span{
+        flex:1;
+        select{
+          width:50px;
+          border:none;
+          background:#fff;
+          height:30px;
+          outline:none;
+          font-size:14px;
+          appearance:none;
+        }
+        &:nth-of-type(1){
+          line-height: 30px;
+        }
+        &:nth-of-type(2){
+          text-align:right;
+          position: relative;
+          &:before{
+            content:'';
+            display:block;
+            width:6px;
+            height:6px;
+            border-top:solid 2px #ccc;
+            border-right:solid 2px #ccc;
+            transform:rotate(135deg);
+            position:absolute;
+            right:5px;
+            top:10px;
+          }
+        }
+      }
+    }
+  }
+  .time{
+    background:#fff;
+    .time_list{
+      display:flex;
+      padding:10px 0;
+      position: relative;
+      .delete{
+        width:50px;
+        height:100%;
+        color: #fff;
+        line-height: 90px;
+        text-align:center;
+        background:#ef5361;
+        position: absolute;
+        right:-50px;
+        top:0;
+        font-size:14px;
+      }
+      .time_text{
+        width: 90px;
+        padding: 0 30px;
+        position: relative;
+        line-height: 70px;
+        &:before{
+          content: '';
+          position: absolute;
+          top:5px;
+          right:0;
+          width: 1px;
+          height: 60px;
+          background: rgb(210,210,210);
+          transform: scaleX(.5);
+        }
+        i img{
+          width: 20px;
+          height: 20px;
+          position: relative;
+          top: 3px;
+          margin-right: 5px;
+        }
+      }
+      .time_select{
+        flex:1;
+        .select{
+          height:35px;
+          text-align: right;
+          padding-right:5px;
+          position: relative;
+          &:before{
+            content:'';
+            display:block;
+            width:6px;
+            height:6px;
+            border-top:solid 2px #ccc;
+            border-right:solid 2px #ccc;
+            transform:rotate(135deg);
+            position:absolute;
+            right:15px;
+            top:12px;
+          }
+          select{
+            width:75px;
+            font-size: 14px;
+            height:35px;
+            outline:none;
+            border:none;
+            background:#fff;
+            appearance:none;
+          }
+        }
+      }
+    }
+    .add_list{
+      padding:10px;
+      text-align: center;
+      color: rgb(181,129,214);
+      i{
+        width:20px;
+        height:20px;
+        background:#40d0ae;
+        display:inline-block;
+        vertical-align:text-bottom;
+        border-radius:50%;
+        margin-right:10px;
+        font-size: 18px;
+        line-height: 20px;
+        text-align:center;
+        color:#fff;
+        line-height: 18px;
+      }
+    }
+  }
+}
+
+.saveWeek {
+  font-size: 18px;
+  color: rgb(255,255,255);
+  text-align: center;
+  padding: 10px;
+  background: rgba(139,73,246,.8);
+  border-radius: 24px;
+  margin: 20px 15px;
+
+}

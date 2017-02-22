@@ -1,0 +1,31 @@
+.menu_bar {
+      height: 40px;
+      background-color: #fff;
+      text-align: center;
+      position: relative;
+      &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        top: 39px;
+        width: 100%;
+        height: 1px;
+        background: rgb(210,210,210);
+        transform: scaleY(.5);
+      }
+      ul {
+        display: flex;
+        justify-content: space-around;
+      }
+      li a {
+        padding: 0 18px;
+        font-size: 14px;
+        color: rgb(210,210,210);
+        line-height: 40px;
+        display: inline-block;
+      }
+      li a.active {
+        font-size: 16px;
+        color: rgb(158,103,206);
+      }
+    }

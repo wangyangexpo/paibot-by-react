@@ -1,0 +1,50 @@
+.dialog{
+        .confirm-mask{
+            position: fixed;
+            z-index: 3;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background:rgba(0,0,0,.3);
+        }
+        .dialog-info{
+            width: 85%;
+            position: fixed;
+            background:rgb(249,249,249);
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            z-index: 12;
+            border-radius: 15px;
+            .dialog-content{
+                padding:10px;
+                p{
+                    font-size: 16px;
+                    color: #666;
+                    text-align: center;
+                    line-height: 1.25;
+                    padding: 20px 0;
+                }
+                .dialog-button{
+                    display: flex;
+                    padding:20px;
+                    a{
+                        border:solid 1px #eee;
+                        margin-right:15px;
+                        color:#666;
+                        flex:1;
+                        height:32px;
+                        text-align: center;
+                        line-height:32px;
+                        font-size:14px;
+                        border-radius:16px;
+                        background:linear-gradient(to top, #fafafa 0%,#fff 100%);
+                        &.btn-confirm{
+                            color:#ac79bd;
+                        }
+                    }
+                }
+            }
+        }
+    }
