@@ -181,9 +181,13 @@ class AddWeekly extends React.Component {
           let response_status = this.props.studyInfo.response_status;
           if(response_status == 200) {
             //跳转到上一weekly页面
+            this.props.router.goBack();
           }else{
             alert('周期重复，添加失败！');
           }
+        })
+        .catch(() => {
+          alert('服务器错误！')
         })
     }
   }

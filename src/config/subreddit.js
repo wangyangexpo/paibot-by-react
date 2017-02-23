@@ -64,6 +64,30 @@ let subreddits = {
 		setURL: baseUrl + '/assistant/AppManage/showManageModelApp',
 		getURL: baseUrl + '/assistant/AppManage/showManageModelApp',
 		params: {}
+	},
+	'studyModelApps': {
+		name: 'studyModelApps',
+		setURL: baseUrl + '/assistant/AppManage/showStudyModelApp',
+		getURL: baseUrl + '/assistant/AppManage/showStudyModelApp',
+		params: {}
+	},
+	'multiVariateApps': {
+		name: 'multiVariateApps',
+		setURL: baseUrl + '/assistant/AppManage/getMultivariateApp2',
+		getURL: baseUrl + '/assistant/AppManage/getMultivariateApp2',
+		params: {}
+	},
+	'installApp': {
+		name: 'installApp',
+		setURL: baseUrl + '/assistant/AppManage/addAppToRedisList',
+		getURL: baseUrl + '/assistant/AppManage/addAppToRedisList',
+		params: {}
+	},
+	'deleteApp': {
+		name: 'deleteApp',
+		setURL: baseUrl + '/assistant/AppManage/deleteMultivariateApp2',
+		getURL: baseUrl + '/assistant/AppManage/deleteMultivariateApp2',
+		params: {}
 	}
 }
 

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setSubreddit } from '../../actions';
 
-class ManageListCell extends React.Component {
+class WhiteListCell extends React.Component {
   constructor(props) {
   	super(props);
     this.state = {
@@ -21,11 +21,11 @@ class ManageListCell extends React.Component {
     }else{
       params = {'delete_app_id':[{parent_category_id:parent_category_id,app_id:app_id}]};
     }
-    this.props.setManageModel(params)
+    this.props.setStudyModel(params)
       .then(() => {
-        let response_status = this.props.manageInfo.response_status;
+        let response_status = this.props.studyInfo.response_status;
         if(response_status == 200){
-          this.props.getManageAppsByType(this.props.type);
+          this.props.getStudyAppsByType(this.props.type);
         }
       })
   }
@@ -77,20 +77,20 @@ class ManageListCell extends React.Component {
   }
 }
 
-ManageListCell.defaultProps = {
+WhiteListCell.defaultProps = {
 };
 
 function mapStateToProps(state) {
   return {
-    manageInfo: state.setSubreddit.manageInfo
+    studyInfo: state.setSubreddit.studyInfo
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    setManageModel: (params) => {
+    setStudyModel: (params) => {
       let subreddit = {
-        name: 'manageInfo',
+        name: 'studyInfo',
         params: params
       }
       return dispatch(setSubreddit(subreddit))
@@ -98,4 +98,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageListCell);
+export default connect(mapStateToProps, mapDispatchToProps)(WhiteListCell);

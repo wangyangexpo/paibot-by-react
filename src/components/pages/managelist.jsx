@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { setSubreddit } from '../../actions';
 import ManagebarCell from '../cells/managebarcell';

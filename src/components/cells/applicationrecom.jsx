@@ -9,7 +9,10 @@ class ApplicationRecom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        items: []
+        items: [
+          {multivariate_id:20},{multivariate_id:21},{multivariate_id:22},
+          {multivariate_id:23},{multivariate_id:24},{multivariate_id:25}
+        ]
     }
   }
 

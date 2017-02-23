@@ -12,7 +12,7 @@ class Manage extends React.Component {
   	super(props);
   	this.state = {
   		manage: {is_open: 0},
-      study: {is_open: 1, week_time_count: ''}
+      study: {is_open: 0, week_time_count: ''}
   	}
 
     this.changeManageStudy = this.changeManageStudy.bind(this);

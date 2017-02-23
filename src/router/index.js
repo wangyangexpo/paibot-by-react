@@ -8,6 +8,8 @@ import Manage from '../components/pages/manage';
 import ManageList from '../components/pages/managelist';
 import Weekly from '../components/pages/weekly';
 import Addweekly from '../components/pages/addweekly'
+import Whitelist from '../components/pages/whitelist'
+import Recommendlist from '../components/pages/recommendlist'
 import { Provider } from 'react-redux';
 import store from '../stores'
 
@@ -23,6 +25,8 @@ var router = (
 				<Route name="managelist" path="managelist" component={ManageList}/>
 				<Route name="weekly" path="weekly" component={Weekly}/>
 				<Route name="addweekly" path="addweekly" component={Addweekly}/>
+				<Route name="whitelist" path="whitelist" component={Whitelist}/>
+				<Route name="recommendlist" path="recommendlist" component={Recommendlist}/>
 			</Route>
 		</Router>
 	</Provider>
