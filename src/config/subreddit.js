@@ -88,6 +88,12 @@ let subreddits = {
 		setURL: baseUrl + '/assistant/AppManage/deleteMultivariateApp2',
 		getURL: baseUrl + '/assistant/AppManage/deleteMultivariateApp2',
 		params: {}
+	},
+	'articleList': {
+		name: 'articleList',
+		setURL: baseUrl + '/user/user/getUserInfoGrow',
+		getURL: baseUrl + '/user/user/getUserInfoGrow',
+		params: {}
 	}
 }
 

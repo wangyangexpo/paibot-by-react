@@ -10,6 +10,8 @@ import Weekly from '../components/pages/weekly';
 import Addweekly from '../components/pages/addweekly'
 import Whitelist from '../components/pages/whitelist'
 import Recommendlist from '../components/pages/recommendlist'
+import Articlelist from '../components/pages/articlelist'
+import Articleshow from '../components/pages/articleshow'
 import { Provider } from 'react-redux';
 import store from '../stores'
 
@@ -27,6 +29,8 @@ var router = (
 				<Route name="addweekly" path="addweekly" component={Addweekly}/>
 				<Route name="whitelist" path="whitelist" component={Whitelist}/>
 				<Route name="recommendlist" path="recommendlist" component={Recommendlist}/>
+				<Route name="articlelist" path="articlelist" component={Articlelist}/>
+				<Route name="articleshow" path="articleshow" component={Articleshow}/>
 			</Route>
 		</Router>
 	</Provider>

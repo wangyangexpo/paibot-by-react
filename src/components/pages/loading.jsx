@@ -22,7 +22,7 @@ class Loading extends React.Component {
             alert('孩子未登录，可通过协助登陆帮助孩子登陆产品');
             location.href = 'putao://webViewBack';
           } else {
-            var device_id = _this.props.childInfo.data[0].opcode;
+            var device_id = response_data[0].opcode;
           
             let option = {
               token:config.token,

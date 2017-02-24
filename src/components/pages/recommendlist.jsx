@@ -10,25 +10,25 @@ class Recommendlist extends React.Component {
     this.state = {
       update_applist: 0,
       menu_list: [
-        {
-          name: '语文课程',
-          multivariate_id: '20'
-        },{
-          name: '数学课程',
-          multivariate_id: '21'
-        },{
-          name: '英语课程',
-          multivariate_id: '22'
-        },{
-          name: '娱乐课程',
-          multivariate_id: '23'
-        },{
-          name: '科学教程',
-          multivariate_id: '24'
-        },{
-          name: '综合课程',
-          multivariate_id: '25'
-        }
+        // {
+        //   name: '语文课程',
+        //   multivariate_id: '20'
+        // },{
+        //   name: '数学课程',
+        //   multivariate_id: '21'
+        // },{
+        //   name: '英语课程',
+        //   multivariate_id: '22'
+        // },{
+        //   name: '娱乐课程',
+        //   multivariate_id: '23'
+        // },{
+        //   name: '科学教程',
+        //   multivariate_id: '24'
+        // },{
+        //   name: '综合课程',
+        //   multivariate_id: '25'
+        // }
       ]
     }
 
