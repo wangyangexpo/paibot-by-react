@@ -12,6 +12,7 @@ import Whitelist from '../components/pages/whitelist'
 import Recommendlist from '../components/pages/recommendlist'
 import Articlelist from '../components/pages/articlelist'
 import Articleshow from '../components/pages/articleshow'
+import Timeout from '../components/pages/timeout'
 import { Provider } from 'react-redux';
 import store from '../stores'
 
@@ -31,6 +32,7 @@ var router = (
 				<Route name="recommendlist" path="recommendlist" component={Recommendlist}/>
 				<Route name="articlelist" path="articlelist" component={Articlelist}/>
 				<Route name="articleshow" path="articleshow" component={Articleshow}/>
+				<Route name="timeout" path="timeout" component={Timeout}/>
 			</Route>
 		</Router>
 	</Provider>
