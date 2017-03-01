@@ -13,7 +13,8 @@ class ProtectCell extends React.Component {
       items:[5,10,15,20,25,30,40,50,60,100,120],
       dataInfo:[],
       lastTime_selected: 30,
-      restTime_selected: 5
+      restTime_selected: 5,
+      needUpdate: true
     }
 
     this.toggle = this.toggle.bind(this);
@@ -22,16 +23,23 @@ class ProtectCell extends React.Component {
   }
 
   componentDidMount() {
-    // 初始化 btnstatuse，lastTime_selected, restTime_selected
-    let initInfo = this.props.info;
-    if(initInfo.status != undefined && initInfo.status != 0){
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // 此处needUpdate 变量用于第一次更新时 设置该组件的state
+    // 为什么不在componentDidMount中设置，因为父组件传入该组件的props.info是通过父组件 异步请求获得的，componentDidMount的时候
+    // 获取不到，只有父组件的异步请求返回时，才能receive到props，为什么只更新一次，因为后面子组件更新父组件状态的时候，会改变传入的porps
+    // 的值，导致影响子组件处理函数中的逻辑。
+    if(this.state.needUpdate){
+      let info = nextProps.info;
       this.setState({
-        btnstatus: true,
-        lastTime_selected: initInfo.last_time,
-        restTime_selected: initInfo.rest_time
-      })
+          btnstatus: info.status,
+          lastTime_selected: info.last_time,
+          restTime_selected: info.rest_time,
+          needUpdate: false
+        })
     }
-  
   }
 
   toggle() {
@@ -54,9 +62,9 @@ class ProtectCell extends React.Component {
       _this.props.showLoading(false);
       let response_status = _this.props.protectInfo.response_status;
       if(response_status == '200') {
-        _this.setState(() => {
+        _this.setState(() => ({
           btnstatus: toggles
-        })
+        }))
       } else {
         alert('修改失败！')
       }
@@ -89,9 +97,9 @@ class ProtectCell extends React.Component {
       _this.props.showLoading(false);
       let response_status = _this.props.protectInfo.response_status;
       if(response_status == '200') {
-        _this.setState({
+        _this.setState(() => ({
           [whichTime + '_selected']: seletc_value
-        })
+        }))
       } else {
         alert('修改失败！')
       }

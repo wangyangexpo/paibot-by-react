@@ -28,8 +28,8 @@ class Home extends React.Component {
         let response_status = homeInfo.response_status;
         if(response_status == '200') {
           _this.setState({
-            protect1: homeInfo.data[0],
-            protect2: homeInfo.data[1]
+            protect1: homeInfo.response_data.use,
+            protect2: homeInfo.response_data.lock
           })
         }
       })

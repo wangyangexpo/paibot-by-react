@@ -28,6 +28,9 @@ class LockingTime extends React.PureComponent {
     if(!this.props.show){
       styleObj = {display:'none'}
     }
+
+    var seconds = parseInt(this.props.timeSecond % 60);
+    seconds = seconds < 10 ? ('0' + seconds) : seconds;
     return (<div className="locking-time bottom1" style={styleObj}>
               {
                   this.props.showLocker ?
@@ -39,7 +42,7 @@ class LockingTime extends React.PureComponent {
                         <div id="timeinfo">
                           <p>自动解锁倒计时</p>
                           <div className="time" id="time"><i id="m">{parseInt(this.props.timeSecond / 60)}</i>:
-                          <i id="s">{parseInt(this.props.timeSecond % 60)}</i></div>
+                          <i id="s">{ seconds }</i></div>
                         </div>
                       <div className="hide" id="infinite">请手动解锁</div>
                     </div>)
@@ -67,7 +70,8 @@ class Locking extends React.Component {
       showLocker:false,
       showTip:false,
       failedTimes: 0,
-      showLockList:false
+      showLockList:false,
+      needUpdate: true
     }
 
     this.countdown = this.countdown.bind(this);
@@ -105,7 +109,7 @@ class Locking extends React.Component {
         
         let option = {
           status:1,
-          time: lockingTime == Infinity ? '' : lockingTime,
+          lock_time: lockingTime == Infinity ? '' : lockingTime,
           type: lockingTime == Infinity ? ['status'] : ['status', 'lock_time']
         };
 
@@ -159,10 +163,10 @@ class Locking extends React.Component {
           showLockList: true
         })
       }else{
-        // todo 设置loading的显示
-
-        _this.props.setLockingInfo({status: 0})
+        _this.props.showLoading(true, '设置中');
+        _this.props.setLockingInfo({status: 0,lock_time:'',type:['status']})
           .then(() => {
+            _this.props.showLoading(false);
             let response_code = _this.props.lockingInfo.response_status;
             if(response_code == '200'){
               let push_status = _this.props.lockingInfo.response_data.succeed;
@@ -193,8 +197,17 @@ class Locking extends React.Component {
   }
 
   componentDidMount() {
-    let lockingInfo = this.props.info;
-    let lockingStatus = lockingInfo.status;
+  
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // 此处needUpdate 变量用于第一次更新时 设置该组件的state
+    // 为什么不在componentDidMount中设置，因为父组件传入该组件的props.info是通过父组件 异步请求获得的，componentDidMount的时候
+    // 获取不到，只有父组件的异步请求返回时，才能receive到props，为什么只更新一次，因为后面子组件更新父组件状态的时候，会改变传入的porps
+    // 的值，导致影响子组件处理函数中的逻辑。
+    if(this.state.needUpdate){
+      let lockingInfo = nextProps.info;
+      let lockingStatus = lockingInfo.status;
       if(lockingStatus == 1){
 
         this.setState({
@@ -212,7 +225,12 @@ class Locking extends React.Component {
             showLocker: true
           });
         }
+        this.setState({
+            needUpdate: false
+          });
       }
+    }
+    
   }
 
   render() {
