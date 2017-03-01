@@ -37,7 +37,7 @@ class Weekly extends React.Component {
       .then(() => {
         let response_status = this.props.manageStudyInfo.response_status;
         if(response_status == 200) {
-          let items = this.props.manageStudyInfo.study_model.week_time;
+          let items = this.props.manageStudyInfo.response_data.study_model.week_time;
           this.setState({
             items: items
           })

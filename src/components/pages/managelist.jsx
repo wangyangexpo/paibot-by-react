@@ -32,7 +32,7 @@ class ManageList extends React.Component {
         let response_status = this.props.manageModelApps.response_status;
         if(response_status == 200){
           this.setState({
-            manageApps: this.props.manageModelApps.response_data.data || []
+            manageApps: this.props.manageModelApps.response_data || []
           })
         }
       })
@@ -45,7 +45,7 @@ class ManageList extends React.Component {
         let response_status = this.props.manageModelApps.response_status;
         if(response_status == 200){
           this.setState({
-            manageApps: this.props.manageModelApps.response_data.data || []
+            manageApps: this.props.manageModelApps.response_data || []
           })
         }
       })
@@ -56,7 +56,7 @@ class ManageList extends React.Component {
     return (
       <div>
         <div className="containder">
-          <ManagebarCell getManageAppsByType={this.getManageAppsByType}></ManagebarCell>
+          <ManagebarCell getAppsByType={this.getManageAppsByType}></ManagebarCell>
           <ManagelistCell items={this.state.manageApps} type={this.state.type}
           getManageAppsByType={this.getManageAppsByType}></ManagelistCell>
         </div>

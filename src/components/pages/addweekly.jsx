@@ -15,8 +15,8 @@ class AddWeekly extends React.Component {
     this.state = {
       dialog_show: false,
       weekly_list:{
-        weekly_start: '1',
-        weekly_end: '4'
+        week_start: 1,
+        week_end: 4
       },
       all_weekly:[
         {weekly:'一',cnNum:1},
@@ -145,7 +145,7 @@ class AddWeekly extends React.Component {
   check() {
     let weekList = this.state.weekly_list;
     let timeList = this.state.time_list;
-    if(weekList.weekly_start > weekList.weekly_end) {
+    if(weekList.week_start > weekList.week_end) {
       alert('开始周期不能大于结束周期');
       return false;
     }
@@ -170,8 +170,8 @@ class AddWeekly extends React.Component {
     if(this.check()){
       let originWeekly = this.state.originWeekly;
       let new_weekly_list = this.state.weekly_list;
-      new_weekly_list.weekly_start_cn = CN[new_weekly_list.weekly_start - 1];
-      new_weekly_list.weekly_end_cn = CN[new_weekly_list.weekly_end - 1];
+      new_weekly_list.week_start_cn = CN[new_weekly_list.week_start - 1];
+      new_weekly_list.week_end_cn = CN[new_weekly_list.week_end - 1];
       let params = {
         week_time: [...originWeekly,Object.assign({
           time: this.state.time_list},new_weekly_list)]
@@ -251,7 +251,7 @@ class AddWeekly extends React.Component {
               <div className="weekly_select bottom1">
                 <span>开始</span>
                 <span>
-                  <select value={this.state.weekly_list.weekly_start} onChange={this.changeWeek.bind(this,'weekly_start')}>
+                  <select value={this.state.weekly_list.week_start} onChange={this.changeWeek.bind(this,'week_start')}>
                     { weekSelect }
                   </select>
                 </span>
@@ -259,7 +259,7 @@ class AddWeekly extends React.Component {
               <div className="weekly_select bottom1">
                 <span>结束</span>
                 <span>
-                  <select value={this.state.weekly_list.weekly_end} onChange={this.changeWeek.bind(this,'weekly_end')}>
+                  <select value={this.state.weekly_list.week_end} onChange={this.changeWeek.bind(this,'week_end')}>
                     { weekSelect }
                   </select>
                 </span>

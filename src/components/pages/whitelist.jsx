@@ -33,7 +33,7 @@ class Whitelist extends React.Component {
         let response_status = this.props.studyModelApps.response_status;
         if(response_status == 200){
           this.setState({
-            studyApps: this.props.studyModelApps.response_data.data || []
+            studyApps: this.props.studyModelApps.response_data || []
           })
         }
       })
@@ -46,7 +46,7 @@ class Whitelist extends React.Component {
         let response_status = this.props.studyModelApps.response_status;
         if(response_status == 200){
           this.setState({
-            manageApps: this.props.studyModelApps.response_data.data || []
+            studyApps: this.props.studyModelApps.response_data || []
           })
         }
       })
@@ -58,9 +58,9 @@ class Whitelist extends React.Component {
     return (
       <div>
         <div className="containder">
-            <ManagebarCell getManageAppsByType={this.getStudyAppsByType}></ManagebarCell>
+            <ManagebarCell getAppsByType={this.getStudyAppsByType}></ManagebarCell>
             <WhitelistCell items={this.state.studyApps} type={this.state.type}
-          getManageAppsByType={this.getStudyAppsByType}></WhitelistCell>
+          getStudyAppsByType={this.getStudyAppsByType}></WhitelistCell>
         </div>
       </div>
     )

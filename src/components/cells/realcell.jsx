@@ -26,7 +26,7 @@ class RealCell extends React.Component {
            _this.setState(prevState => ({
               toggleStatus: !prevState.toggleStatus
            }));
-           this.props.changeManageStudy('study');
+           this.props.changeManageStudy();
         }
        
       })

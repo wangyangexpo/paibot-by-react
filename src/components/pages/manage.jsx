@@ -26,8 +26,8 @@ class Manage extends React.Component {
         let response_status = manageStudyInfo.response_status;
         if(response_status == '200') {
           _this.setState({
-            manage: manageStudyInfo.response_data.managedata,
-            study: manageStudyInfo.response_data.studydata
+            manage: manageStudyInfo.response_data.manage_model,
+            study: manageStudyInfo.response_data.study_model
           })
         }
       })
@@ -35,18 +35,21 @@ class Manage extends React.Component {
       });
   }
 
-  changeManageStudy(change) {
-    if(change == 'manage'){
-      this.setState(prev => ({
-        manage: {is_open: (1 - prev.manage.is_open)},
-        study: {is_open: !prev.manage.is_open && prev.study.is_open ? 0 : prev.study.is_open}
-      }))
-    }else{
-      this.setState(prev => ({
-        manage: {is_open: !prev.study.is_open && prev.manage.is_open ? 0 : prev.manage.is_open},
-        study: {is_open: 1 - prev.study.is_open}
-      }))
-    }
+  changeManageStudy() {
+    let _this = this;
+    this.props.getManageStudyInfo()
+      .then(() => {
+        let manageStudyInfo = _this.props.manageStudyInfo;
+        let response_status = manageStudyInfo.response_status;
+        if(response_status == '200') {
+          _this.setState({
+            manage: manageStudyInfo.response_data.manage_model,
+            study: manageStudyInfo.response_data.study_model
+          })
+        }
+      })
+      .catch(() => {
+      });
   }
 
   render() {

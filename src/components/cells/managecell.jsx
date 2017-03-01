@@ -23,7 +23,7 @@ class ManageCell extends React.Component {
         let manageInfo = _this.props.manageInfo;
         let response_status = manageInfo.response_status;
         if(response_status == '200') {
-           this.props.changeManageStudy('manage');
+           this.props.changeManageStudy();
         }
       })
       .catch(() => {

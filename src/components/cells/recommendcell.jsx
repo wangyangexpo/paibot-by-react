@@ -35,17 +35,6 @@ class RecommendlistCell extends React.Component {
   }
 
   componentDidMount() {
-    let len = this.state.items.length;
-    if(len > 0){
-      window.addEventListener('touchstart', function() {
-        Swiped.init({
-          query: '.appmanagelist',
-          list: true,
-          left: 0,
-          right: 60
-        });
-      });
-    }
     this.props.getMultiVariateApps(this.props.curr)
       .then(() => {
         let response_status = this.props.multiVariateApps.response_status;
@@ -54,6 +43,17 @@ class RecommendlistCell extends React.Component {
           this.setState({
             items: response_data
           })
+          let len = response_data.length;
+          if(len > 0){
+            window.addEventListener('touchstart', function() {
+              Swiped.init({
+                query: '.appmanagelist',
+                list: true,
+                left: 0,
+                right: 60
+              });
+            });
+          }
         }
       })
   }

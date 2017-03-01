@@ -45,7 +45,7 @@ class WhiteListCell extends React.Component {
             </div>
             <div className="inputswitch">
               <label className="toggle-switch-wrap">
-                <input className="new-toggle-switch fr mt23 mr15" type="checkbox" checked={item.is_manage == 0}
+                <input className="new-toggle-switch fr mr15" type="checkbox" checked={item.is_manage == 0}
                 onChange={this.toggle.bind(this,item.app_id,item.parent_category_id,item.is_manage)}/>
                 <span className="off">OFF</span>
                 <span className="on">ON</span>

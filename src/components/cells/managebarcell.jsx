@@ -22,7 +22,7 @@ class ManageBarCell extends React.Component {
     this.setState({
       curr: type
     })
-    this.props.getManageAppsByType(type);
+    this.props.getAppsByType(type);
   }
 
   render() {
