@@ -54,7 +54,7 @@ class Articlelist extends React.Component {
             let processStatus;
             if (response_status == 200) {
                 let newData = this.props.articleList.response_data;
-                let newItems = [...this.state.items, newData];
+                let newItems = [...this.state.items].concat(newData);
                 if (newData.length < 10) {
                     processStatus = 2;
                 }else {
